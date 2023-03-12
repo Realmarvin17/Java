@@ -7,26 +7,28 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 public class Homework2 {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
-        System.out.println(buildString());
+        System.out.println(buildString(6, 'a', 'b'));
 
-        saveFile(buildString());
+        saveFile(buildString(6, 'a', 'b'));
 
-        System.out.println(buildStringHundredTimes());
+        System.out.println(buildStringHundredTimes("Text", 100));
 
-        saveFileSS(buildStringHundredTimes());
+        saveFileSS(buildStringHundredTimes("Text", 100));
     }
-    static String buildString() {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 6; i++) {
-            if (i % 2 == 0) sb.append('a');
-            else sb.append('b');
-        }
-        return sb.toString();
+    static String buildString(int n, char c1, char c2) {
+        if (n % 2 == 0) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < n; i++) {
+                if (i % 2 == 0) sb.append(c1);
+                else sb.append(c2);
+            }
+            return sb.toString();
+        } else return "n not even. Exit program.";
     }
 
-    static void saveFile(String createdString) throws Exception {
+    static void saveFile(String createdString) {
         try {
             String pathProject = System.getProperty("user.dir");
             String pathFile = pathProject.concat("/file_ab.txt");
@@ -41,24 +43,30 @@ public class Homework2 {
             } else {
                 System.out.println("file.existed");
             }
+        } catch (Exception e) {
+            e.getMessage();
         } finally {
             System.out.println(createdString);
         }
     }
 
-    static String buildStringHundredTimes() {
-        return "Text".repeat(100);
+    static String buildStringHundredTimes(String s , int n) {
+        return s.repeat(n);
     }
 
-    static void saveFileSS(String createdString) throws Exception {
-        Path of = Path.of("file.txt");
+    static void saveFileSS(String createdString) {
+        try {
+            Path of = Path.of("file.txt");
 
-        if (!Files.exists(of)) {
-            System.out.println("file.created");
-            Files.createFile(of);
-            Files.writeString(of,createdString);
-        } else {
-            System.out.println("file.existed");
+            if (!Files.exists(of)) {
+                System.out.println("file.created");
+                Files.createFile(of);
+                Files.writeString(of,createdString);
+            } else {
+                System.out.println("file.existed");
+            }
+        } catch (Exception e){
+            e.getMessage();
         }
     }
 }
